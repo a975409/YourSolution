@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Filters\" />
+    <Folder Include="Middleware\" />
+    <Folder Include="Extensions\" />
+    <Folder Include="Models\Requests\" />
+    <Folder Include="Models\Responses\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\YourSolution.Application\YourSolution.Application.csproj" />
+    <ProjectReference Include="..\YourSolution.ExternalServices\YourSolution.ExternalServices.csproj" />
+    <ProjectReference Include="..\YourSolution.Infrastructure\YourSolution.Infrastructure.csproj" />
+  </ItemGroup>
+
+</Project>
