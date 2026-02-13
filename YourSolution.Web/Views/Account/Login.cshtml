@@ -1,0 +1,43 @@
+﻿@inject Microsoft.AspNetCore.Antiforgery.IAntiforgery Antiforgery
+@{
+    var requestToken = Antiforgery.GetAndStoreTokens(Context).RequestToken;
+    var isLock = (bool)ViewBag.IsLock;
+}
+
+<div id="app">
+    <div><input type="text" tabindex="1" placeholder="請輸入帳號" v-model="account" /></div>
+    <div><input type="password" tabindex="2" placeholder="請輸入密碼" v-model="pwd" /></div>
+    <button type="button"
+            id="CookieLogin"
+            tabindex="3"
+            v-on:click="Login">
+        本地帳號登入
+    </button>
+    <button type="button"
+            id="WindowsLogin"
+            v-on:click="WindowsLogin">
+        網域登入
+    </button>
+</div>
+
+@section Scripts{
+    <script type="module">
+        import { createApp } from 'vue';
+        import LoginPage from '../js/LoginPage.js';
+
+        createApp(LoginPage).mount('#app');
+
+    </script>
+
+    @if (isLock)
+    {
+        <script>
+            Swal.fire({
+                    icon: "error",
+                    title: '錯誤',
+                    text: '該帳戶已被系統鎖定，請系統管理員解除鎖定',
+                    confirmButtonText: '確定'
+                });
+        </script>
+    }
+}

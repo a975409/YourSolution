@@ -12,15 +12,13 @@
 
   <ItemGroup>
     <Folder Include="Filters\" />
-    <Folder Include="Middleware\" />
     <Folder Include="Extensions\" />
     <Folder Include="Models\Responses\" />
     <Folder Include="Models\Requests\" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\YourSolution.Application\YourSolution.Application.csproj" />
-    <ProjectReference Include="..\YourSolution.ExternalServices\YourSolution.ExternalServices.csproj" />
+    <ProjectReference Include="..\YourSolution.Domain\YourSolution.Domain.csproj" />
     <ProjectReference Include="..\YourSolution.Infrastructure\YourSolution.Infrastructure.csproj" />
   </ItemGroup>
 

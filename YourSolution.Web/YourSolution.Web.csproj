@@ -7,16 +7,20 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Filters\" />
-    <Folder Include="Middleware\" />
     <Folder Include="Extensions\" />
     <Folder Include="Models\Requests\" />
     <Folder Include="Models\Responses\" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\YourSolution.Application\YourSolution.Application.csproj" />
-    <ProjectReference Include="..\YourSolution.ExternalServices\YourSolution.ExternalServices.csproj" />
+    <PackageReference Include="HtmlSanitizer" Version="9.0.892" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.Negotiate" Version="8.0.24" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="8.0.24" />
+    <PackageReference Include="System.DirectoryServices.AccountManagement" Version="10.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\YourSolution.Domain\YourSolution.Domain.csproj" />
     <ProjectReference Include="..\YourSolution.Infrastructure\YourSolution.Infrastructure.csproj" />
   </ItemGroup>
 
