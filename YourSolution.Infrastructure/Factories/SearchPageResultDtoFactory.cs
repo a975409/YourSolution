@@ -65,7 +65,9 @@ namespace YourSolution.Infrastructure.Factories
             if (result.Page <= 0)
                 result.Page = 1;
 
+            //最多顯示多少頁碼範圍
             int pageRangeSize = 10;
+
             int startPage = (result.Page - 1) / pageRangeSize * pageRangeSize + 1;
             int endPage = startPage + pageRangeSize - 1;
 

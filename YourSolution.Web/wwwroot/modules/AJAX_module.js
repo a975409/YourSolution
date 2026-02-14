@@ -30,7 +30,7 @@ function RefreshRequestToken() {
         gender: 'female',
         nat: 'us'
     }
- * @param {any} option 設定
+ * @param {any} option 設定是否要跳出彈出視窗或顯示loading遮罩
  * @returns
  */
 export async function HttpGetAsync(url, params = {}, option = null) {
@@ -51,10 +51,10 @@ export async function HttpGetAsync(url, params = {}, option = null) {
 }
 
 /**
- * HttpPost
+ * HttpPost(傳遞FormBody)
  * @param {any} url 網址
  * @param {any} data 要傳遞的資料(object)
- * @param {any} option 設定
+ * @param {any} option 設定是否要跳出彈出視窗或顯示loading遮罩
  * @returns
  */
 export async function HttpPostAsync(url, data, option = null) {
@@ -74,9 +74,36 @@ export async function HttpPostAsync(url, data, option = null) {
 }
 
 /**
+ * HttpPost(傳遞FormBody 或 上傳檔案(二進位檔))
+ * @param {any} url 網址
+ * @param {any} data 要傳遞的資料(object)
+ * @param {any} option 設定是否要跳出彈出視窗或顯示loading遮罩
+ * @param {any} isUploadFile 是否要上傳檔案
+ * @returns
+ */
+export async function HttpPostByFormDataAsync(url, data, option = null, isUploadFile = false) {
+
+    let config = {
+        withCredentials: true,
+        headers: {
+            "Content-Type": isUploadFile ? "multipart/form-data" :"application/x-www-form-urlencoded"
+        }
+    };
+
+    if (option == null)
+        return await CommonHttpRequest(() => {
+            return axios.post(url, data, config)
+        });
+
+    return await CommonHttpRequest(() => {
+        return axios.post(url, data, config)
+    }, option);
+}
+
+/**
  * HTTP Request共用函式
  * @param {any} callback 呼叫的Http method
- * @param {any} option 設定
+ * @param {any} option 設定是否要跳出彈出視窗或顯示loading遮罩
  * @returns
  */
 async function CommonHttpRequest(callback, option = {
@@ -85,11 +112,12 @@ async function CommonHttpRequest(callback, option = {
     successTitle: '執行成功',
     errorTitle: '執行失敗'
 }) {
+    /**預設API回傳的內容格式 */
     let returnData = {
         isOK: false,
         message: '',
         data: null,
-        statusCode: 0
+        statusCode: 0 //Http StatusCode
     };
 
     RefreshRequestToken();
@@ -112,7 +140,14 @@ async function CommonHttpRequest(callback, option = {
                         icon: "success",
                         title: option.successTitle,
                         text: returnData.message,
-                        confirmButtonText: '確定'
+                        confirmButtonText: '確定',
+                        didOpen: () => {
+                            const swalContainer = document.querySelector('.swal2-container');
+                            if (swalContainer) {
+                                // 設定一個較高的 z-index
+                                swalContainer.style.zIndex = '999999';
+                            }
+                        }
                     });
                 }
             } else {
@@ -121,7 +156,14 @@ async function CommonHttpRequest(callback, option = {
                         icon: "error",
                         title: option.errorTitle,
                         text: returnData.message,
-                        confirmButtonText: '確定'
+                        confirmButtonText: '確定',
+                        didOpen: () => {
+                            const swalContainer = document.querySelector('.swal2-container');
+                            if (swalContainer) {
+                                // 設定一個較高的 z-index
+                                swalContainer.style.zIndex = '999999';
+                            }
+                        }
                     });
                 }
             }
@@ -154,7 +196,14 @@ async function CommonHttpRequest(callback, option = {
                     icon: "error",
                     title: option.errorTitle,
                     html: errorMessages,
-                    confirmButtonText: '確定'
+                    confirmButtonText: '確定',
+                    didOpen: () => {
+                        const swalContainer = document.querySelector('.swal2-container');
+                        if (swalContainer) {
+                            // 設定一個較高的 z-index
+                            swalContainer.style.zIndex = '999999';
+                        }
+                    }
                 });
             }
         } else if (response.status === 401) {
@@ -173,7 +222,14 @@ async function CommonHttpRequest(callback, option = {
                     icon: "error",
                     title: option.errorTitle,
                     text: error.message,
-                    confirmButtonText: '確定'
+                    confirmButtonText: '確定',
+                    didOpen: () => {
+                        const swalContainer = document.querySelector('.swal2-container');
+                        if (swalContainer) {
+                            // 設定一個較高的 z-index
+                            swalContainer.style.zIndex = '999999';
+                        }
+                    }
                 });
             }
         }
@@ -185,7 +241,7 @@ async function CommonHttpRequest(callback, option = {
 /**
  * 透過 HttpPost 下載檔案
  * @param {any} url
- * @param {any} fileName
+ * @param {any} fileName 預設下載檔名
  * @param {any} data
  */
 export async function DownloadFileByPost(url, fileName, data) {
@@ -239,6 +295,13 @@ export async function DownloadFileByPost(url, fileName, data) {
             icon: "error",
             title: "錯誤",
             text: errorMessage,
+            didOpen: () => {
+                const swalContainer = document.querySelector('.swal2-container');
+                if (swalContainer) {
+                    // 設定一個較高的 z-index
+                    swalContainer.style.zIndex = '999999';
+                }
+            }
         });
     } finally {
         // 隱藏載入遮罩

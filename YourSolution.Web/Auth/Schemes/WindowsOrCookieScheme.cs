@@ -31,8 +31,7 @@ namespace YourSolution.Web.Auth.Schemes
         /// <summary>
         /// 混合認證方案名稱
         /// </summary>
-        public static string CookiesOrNegotiate = "WindowsOrCookie";
-
+        public static string MultipleSchemeName = "MultipleSchemeName";
 
         /// <summary>
         /// 新增Cookie、Windows、ip白名單多種驗證方案
@@ -50,8 +49,8 @@ namespace YourSolution.Web.Auth.Schemes
             //設定預設要採用的驗證方案
             services.AddAuthentication(options =>
             {
-                options.DefaultScheme = CookiesOrNegotiate;
-                options.DefaultChallengeScheme = CookiesOrNegotiate;
+                options.DefaultScheme = MultipleSchemeName;
+                options.DefaultChallengeScheme = MultipleSchemeName;
             })
 
             //ip白名單驗證方案
@@ -74,7 +73,7 @@ namespace YourSolution.Web.Auth.Schemes
             
             //Windows驗證方案
             .AddNegotiate()
-            .AddPolicyScheme(CookiesOrNegotiate, CookiesOrNegotiate, options =>
+            .AddPolicyScheme(MultipleSchemeName, MultipleSchemeName, options =>
             {
                 //根據 Http Request 決定採用哪種驗證方案
                 options.ForwardDefaultSelector = context =>

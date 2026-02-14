@@ -32,7 +32,7 @@ namespace YourSolution.Web.Auth.Middlewares
                 }
 
                 // 使用多重認證方案
-                var authResult = await httpContext.AuthenticateAsync(WindowsOrCookieScheme.CookiesOrNegotiate);
+                var authResult = await httpContext.AuthenticateAsync(WindowsOrCookieScheme.MultipleSchemeName);
 
                 if (authResult.Succeeded && authResult.Principal != null)
                 {
