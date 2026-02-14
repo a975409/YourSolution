@@ -2,6 +2,7 @@ using System.Reflection;
 using YourSolution.Domain;
 using YourSolution.Infrastructure;
 using YourSolution.Infrastructure.IOptions;
+using YourSolution.WebApi.BackgroundServices;
 using YourSolution.WebApi.Middleware;
 using YourSolution.WebApi.Security;
 
@@ -16,6 +17,7 @@ builder.Configuration
 builder.Services.Configure<AppSettings>(builder.Configuration);
 builder.Services.AddDomainServices(builder.Configuration);
 builder.Services.AddInfrastructureServices(builder.Configuration);
+builder.Services.AddHostedService<RequestLogRemoveAll_BackgroundService>();
 builder.Services.APISettingXSRF();
 
 // Add services to the container.
