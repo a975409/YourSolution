@@ -16,16 +16,22 @@ namespace YourSolution.Infrastructure.Repositories
     {
         private readonly IMapper _iMapper;
         private string _connectionString;
+        private readonly IConfiguration _configuration;
 
         public RequestLogRepository(IMapper iMapper, IConfiguration Configuration)
         {
+            _configuration = Configuration;
             _connectionString = Configuration.GetConnectionString("DefaultConnection") ?? string.Empty;
             _iMapper = iMapper;
         }
 
-        public void SetConnectionString(string connectionString)
+        /// <summary>
+        /// 設定連線字串名稱
+        /// </summary>
+        /// <param name="connectionSection">連線字串名稱</param>
+        public void SetConnectionSection(string connectionSection)
         {
-            _connectionString = connectionString;
+            _connectionString = _configuration.GetConnectionString(connectionSection) ?? string.Empty;
         }
 
         /// <summary>
